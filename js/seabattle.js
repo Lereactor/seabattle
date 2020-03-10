@@ -29,11 +29,13 @@ const play = {
 //BD for target
 const show = {
     hit(elem) {
+        this.changeClass(elem, 'hit')
     },
     miss(elem){
         this.changeClass(elem, 'miss');
     },
     dead(elem){
+        this.changeClass(elem, 'dead')
     },
     changeClass(elem, value) {
         elem.className = value;
