@@ -35,7 +35,7 @@ const game = {
 };
 //table for rate
 const play = {
-    record: 0,
+    record: localStorage.getItem('seaBattleRecord') || 0,
     shot: 0,
     hit: 0,
     dead: 0,
@@ -87,8 +87,16 @@ const fire = (event) => {
                 }
                 game.shipcount -= 1;
                 if (game.shipcount < 1) {
-                    header.textContent = 'Game Over';
-                    header.style.color = 'Red';
+                    header.textContent = 'Конец Игры';
+                    header.style.color = 'Green';
+                    enemy.removeEventListener('click', fire);
+                    
+                    if (play.shot < play.record || play.record === 0) {
+                        //for browser memory
+                        localStorage.setItem('seaBattleRecord', play.shot);
+                        play.record = play.shot;
+                        play.render();
+                    }
                 }
             }
         }
@@ -96,7 +104,10 @@ const fire = (event) => {
 }
 //function for start
 const init = () => {
+    play.render();
     enemy.addEventListener('click', fire)
+//restart game
+    again.addEventListener('click', () => location.reload())
 }
 init();
 console.log(enemy)
