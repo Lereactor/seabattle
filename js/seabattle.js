@@ -107,7 +107,12 @@ const init = () => {
     play.render();
     enemy.addEventListener('click', fire)
 //restart game
-    again.addEventListener('click', () => location.reload())
+    again.addEventListener('click', () => location.reload());
+//restart record with double click
+    record.addEventListener('dblclick', () => {
+        play.record = 0;
+        play.render();
+    });
 }
 init();
 console.log(enemy)
