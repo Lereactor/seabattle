@@ -88,7 +88,7 @@ const fire = (event) => {
                 game.shipcount -= 1;
                 if (game.shipcount < 1) {
                     header.textContent = 'Конец Игры';
-                    header.style.color = 'Green';
+                    header.style.color = '#06286b';
                     enemy.removeEventListener('click', fire);
                     
                     if (play.shot < play.record || play.record === 0) {
@@ -111,6 +111,7 @@ const init = () => {
 //restart record with double click
     record.addEventListener('dblclick', () => {
         play.record = 0;
+        localStorage.setItem('seaBattleRecord', 0);
         play.render();
     });
 }
