@@ -1,4 +1,4 @@
-alert('Welcome to the Game');
+//alert('Welcome to the Game');
 console.log('Well begin...');
 //rate
 const record = document.getElementById('record');
@@ -16,11 +16,11 @@ const game = {
     ships: [],
     shipcount: 0,
     optionShip: {
-        count: [1,2,3,4], //count of ships
-        size: [4,3,2,1] //ships size
+        count: [1, 2, 3, 4], //count of ships
+        size: [4, 3, 2, 1] //ships size
     },
-    collision: [],
-    generateShip(){
+    collision: new Set(),
+    generateShip() {
         for  (let i = 0; i < this.optionShip.count.length; i++) {
             for (let j = 0; j < this.optionShip.count[i]; j++) {
                 const size = this.optionShip.size[i];
@@ -30,8 +30,8 @@ const game = {
             }
         }
     },
-    generateOptionShip(shipSize){
-        const shipb = {
+    generateOptionShip(shipSize) {
+        const ship = {
             hit: [],
             location: [],
         };
@@ -49,31 +49,43 @@ const game = {
             y = Math.floor(Math.random() * 10);
         }
 
-
         for (let i = 0; i < shipSize; i++) {
             if (direction) {
-                shipb.location.push(x + '' + (y + i));
+                ship.location.push(x + '' + (y + i))
             } else {
-                shipb.location.push((x + i) + '' + y);
+                ship.location.push((x + i) + '' + y)
             }
-            shipb.hit.push('');
+            ship.hit.push('');
         }
         
-        if (this.checkCollision(shipb.location)) {
-            return this.generateShip(shipSize)
+        if (this.checkCollision(ship.location)) {
+            return this.generateOptionShip(shipSize)
         }
-        this.addCollision(shipb.location);
-        return shipb;
+        this.addCollision(ship.location);
+
+        return ship;
     },
     checkCollision(location) {
         for (const coord of location) {
-            if (this.collision.includes(coord)) {
+            if (this.collision.has(coord)) {
                 return true;
             }
         }
     },
-    addCollision(location){
-        
+    addCollision(location) { 
+        for (let i = 0; i < location.length; i++) {
+            const startCoordX = location[i][0] - 1;
+            for (let j = startCoordX; j < startCoordX + 3; j++){
+                const startCoordY = location[i][1] - 1;
+                for (let z = startCoordY; z < startCoordY +3; z++){
+                    if (j >= 0 && j < 10 && z >=0 && z < 10){
+                        const coord = j + '' + z;
+                        this.collision.add(coord);
+                    }
+                    
+                }
+            }
+        }
     }
 };
 //table for rate
@@ -155,7 +167,7 @@ const init = () => {
 //restart record with double click
     record.addEventListener('dblclick', () => {
         play.record = 0;
-        localStorage.clear(); //localStorage.setItem('seaBattleRecord', 0);
+        localStorage.setItem('seaBattleRecord', 0);//localStorage.clear();
         play.render();
     });
     
