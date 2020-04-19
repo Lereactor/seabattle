@@ -3,7 +3,12 @@ body {
     font-family: 'Roboto', sans-serif;
     font-size: 18px;
     text-transform: uppercase;
-    color: #035bff;
+    background-image: url('../img/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-color: #AFEEEE;
+    color: #141414;
 }
 
 main {
@@ -14,7 +19,7 @@ main {
 }
 
 .header {
-  color: #035bff;
+  color: #141414;
 }
 
 .board {
@@ -22,6 +27,8 @@ main {
 }
 
 table {
+    background-color: whitesmoke;
+    opacity: 0.8;
     border-collapse: collapse;
 }
 
